@@ -1,0 +1,367 @@
+// Importing Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+//------GENERAL SETTINGS -------------------------------
+
+// Universal reset also explicitly to all pseudo-elements
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body section,
+header {
+  padding: 0;
+  margin: 0;
+}
+
+// Define color variables
+$colors: (
+  /*Primary*/ 'dark-grayish-blue': hsl(217, 19%, 35%),
+  /*Primary*/ 'desaturated-dark-blue': hsl(214, 17%, 51%),
+  /*Primary*/ 'grayish-blue': hsl(212, 23%, 69%),
+  /*Primary*/ 'light-grayish-blue': hsl(210, 70%, 91%),
+  /*Primary*/ 'light-grayish-green': hsl(167, 89%, 33%),
+  //--------STANDARD ---------
+  /*Neutral*/ 'white': hsl(0, 0%, 100%),
+  /*Neutral*/ 'black': hsl(0, 0%, 0%)
+);
+
+// Function to retrieve colors
+@function color($color-name) {
+  @return map-get($colors, $color-name);
+}
+
+// Typography Mixin with parameters
+@mixin typography($weight, $size, $line-height, $color) {
+  font-family: 'Manrope', sans-serif;
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line-height;
+  color: $color;
+}
+
+/* QUERY FOR MOBILE FIRST */
+html,
+body {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* This ensures that the total height is at least the height of the viewport */
+  margin: 0;
+  padding: 0;
+  background-color: color('light-grayish-blue');
+  //background-color: crimson;
+}
+
+main {
+  //flex: 1 0 auto; /* This allows the main content to grow and shrink but not shrink smaller than its content */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  //background-color: limegreen;
+}
+
+.articleContainer {
+  width: 100%;
+  min-height: 700px; /* Use min-height to accommodate varying content sizes */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  //margin: 0 auto;
+  padding: 0;
+  //background-color: chartreuse;
+}
+
+.shareIconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  position: absolute;
+  top: 633px;
+  right: 60px;
+  z-index: 3;
+  background-color: color('light-grayish-blue');
+  //background-color: aqua;
+  transition: transform 0.5s ease;
+  &:hover {
+    color: color('light-grayish-green'); // Light grey on hover
+    transform: scale(1.2);
+  }
+  &__shareIcon {
+    width: 1rem;
+    height: 1rem;
+    margin: 0 auto;
+  }
+}
+
+.card {
+  width: 375px;
+  min-height: 400px; /* Use min-height to accommodate varying content sizes */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+  background-color: color('white');
+  //background-color: burlywood;
+  &__bgImage {
+    width: 100%;
+    height: auto;
+  }
+  &__img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 3.2rem;
+    border-radius: 15px 15px 0px 0px;
+    // background-color: chartreuse;
+  }
+
+  &__content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    //background-color: fuchsia;
+  }
+}
+
+h1 {
+  @include typography(800, 1.2rem, 1.5, color('dark-grayish-blue'));
+  margin-bottom: 1.5rem;
+  &:hover {
+    color: color('light-grayish-green');
+  }
+}
+
+h2 {
+  @include typography(600, 0.9rem, 1.5, color('dark-grayish-blue'));
+  margin-bottom: 2rem;
+}
+
+p {
+  @include typography(600, 0.9rem, 1.5, color('desaturated-dark-blue'));
+}
+
+.paragraph {
+  margin-bottom: 3rem;
+}
+
+.textDark {
+  @include typography(700, 1rem, 0.5, color('dark-grayish-blue'));
+}
+
+.textGray {
+  margin-top: 1rem;
+  @include typography(700, 1rem, 0.5, color('grayish-blue'));
+}
+
+.author {
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  //background-color: blueviolet;
+  &__photo {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-image: url(../assets/images/avatar-michelle.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-right: 1rem;
+  }
+  &__info {
+    height: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // background-color: aqua;
+  }
+}
+
+.modal {
+  width: 375px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 610px;
+  opacity: 0;
+  animation: float 3s ease-in-out infinite;
+  padding: 1rem;
+  border-radius: 0px 0px 15px 15px;
+  background-color: color('dark-grayish-blue');
+  //background-color: chartreuse;
+  &__shareText {
+    letter-spacing: 0.3rem;
+    @include typography(700, 1rem, 1.5, color('grayish-blue'));
+    transition: transform 0.5s ease;
+    &:hover {
+      color: color('light-grayish-green'); // Light grey on hover
+      border-color: #ccc; // Border color matches hover color
+      transform: scale(1.2);
+    }
+  }
+  &__socialMedia {
+    width: 150px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; // Adjusts spacing between icons
+    //background-color: aquamarine;
+
+    &__link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 35px; // Set the size of the clickable area
+      height: 35px;
+      border: 2px solid white; // White border
+      border-radius: 50%; // Circular border
+      color: white; // Icon color
+      text-decoration: none; // Removes underline from links
+      transition: transform 0.5s ease;
+      &:hover {
+        color: color('light-grayish-green'); // Light grey on hover
+        border-color: #ccc; // Border color matches hover color
+        transform: scale(1.2);
+      }
+
+      i {
+        font-size: 18px; // Icon size
+      }
+    }
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.modal {
+  animation: float 3s ease-in-out infinite;
+}
+
+.myButton {
+  width: 100%;
+  height: 3.5rem;
+  border-style: none;
+  border-radius: 7px;
+  color: var(--color-White);
+  font-size: 1.2rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  background-color: var(--color-Dark-Green);
+}
+
+.myButton:hover {
+  background-color: var(--color-Light-Green);
+  cursor: pointer;
+  /* color: var(--color-Dark-Green); */
+}
+
+//------   FOOTER    ----------------
+.footerContainer {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  //background-color: deepskyblue;
+}
+.attribution {
+  text-align: center;
+  margin-bottom: 3rem; /* Keeps the footer at the bottom but only after all other content */
+}
+.attribution a {
+  color: hsl(228, 45%, 44%);
+  text-decoration: none;
+}
+
+//------ MEDIA QUERY FOR DESKTOPS AND TABLETS ----------------
+
+@media (min-width: 650px) {
+  main {
+    //flex: 1 0 auto; /* This allows the main content to grow and shrink but not shrink smaller than its content */
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 6rem;
+    //background-color: limegreen;
+  }
+  .articleContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10rem;
+  }
+  .shareIconContainer {
+    position: absolute;
+    top: 345px;
+    right: 50px;
+  }
+
+  .card {
+    min-width: 800px; /* Use min-height to accommodate varying content sizes */
+    max-height: 400px; /* Use min-height to accommodate varying content sizes */
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2rem;
+    margin: 0 auto;
+    &__bgImage {
+      width: 100%;
+      height: auto;
+    }
+    &__img {
+      width: 100%;
+      height: 100%;
+      margin-bottom: 3.2rem;
+      border-radius: 15px 0px 0px 15px;
+      // background-color: chartreuse;
+    }
+
+    &__content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      padding: 2rem;
+    }
+  }
+
+  .modal {
+    width: 400px;
+    height: 55px;
+    top: 275px;
+    left: 500px;
+    border-radius: 10px 10px 10px 10px;
+  }
+}
+
+///////////////// TOOLS ///////////////////////////
+//🛠
+
+/* transition: transform 0.5s ease;
+&:hover {
+  color: color('soft-magenta'); 
+  transform: scale(1.2);
+}  */
